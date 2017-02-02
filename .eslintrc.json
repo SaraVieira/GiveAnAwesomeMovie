@@ -10,19 +10,19 @@
     },
     "rules": {
         "indent": [
-            "error",
+            1,
             "tab"
         ],
         "linebreak-style": [
-            "error",
+            1,
             "unix"
         ],
         "quotes": [
-            "error",
+            1,
             "single"
         ],
         "semi": [
-            "error",
+            1,
             "always"
         ]
     }

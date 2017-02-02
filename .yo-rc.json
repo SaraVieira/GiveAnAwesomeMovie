@@ -1,3 +1,65 @@
 {
-  "generator-react-webpack": {}
+  "generator-react-webpack": {},
+  "generator-wave": {
+    "version": "1.0.0",
+    "props": {
+      "angularVersion": "~1.5.3",
+      "angularModules": [
+        {
+          "key": "animate",
+          "module": "ngAnimate"
+        },
+        {
+          "key": "messages",
+          "module": "ngMessages"
+        }
+      ],
+      "jQuery": {
+        "key": "jqLite"
+      },
+      "resource": {
+        "key": "$http",
+        "module": null
+      },
+      "router": {
+        "key": "ui-router",
+        "module": "ui.router"
+      },
+      "ui": {
+        "key": "material-design-lite",
+        "module": null
+      },
+      "cssPreprocessor": {
+        "key": "less",
+        "extension": "less"
+      },
+      "jsPreprocessor": {
+        "key": "babel",
+        "extension": "js",
+        "srcExtension": "es6"
+      },
+      "htmlPreprocessor": {
+        "key": "noHtmlPrepro",
+        "extension": "html"
+      },
+      "bootstrapComponents": {
+        "name": null,
+        "version": null,
+        "key": null,
+        "module": null
+      },
+      "foundationComponents": {
+        "name": null,
+        "version": null,
+        "key": null,
+        "module": null
+      },
+      "paths": {
+        "src": "src",
+        "dist": "dist",
+        "e2e": "e2e",
+        "tmp": ".tmp"
+      }
+    }
+  }
 }
