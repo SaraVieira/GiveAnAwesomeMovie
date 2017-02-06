@@ -14,101 +14,104 @@ const DB_NAME = 'movies';
 const DB_URI = 'mongodb://localhost:27017/' + DB_NAME;
 
 mongoose.connect(DB_URI, _ => {
-  server.connection({
-    host: 'localhost',
-    port: process.env.PORT || 8081
+  			server.connection({
+    			host: 'localhost',
+    			port: process.env.PORT || 8081,
+        	routes: {
+            	cors: true
+        }
   });
 
-  const validate = (decoded, req, cb) => {
-    let err;
-    User.findOne({_id: decoded._id }, function(err, user) {
-      if (err) throw err;
+  			const validate = (decoded, req, cb) => {
+    			let err;
+    			User.findOne({_id: decoded._id }, function(err, user) {
+      			if (err) throw err;
 
-      if (!user) {
-        return cb(err, false);
+      			if (!user) {
+        			return cb(err, false);
       }
 
-      req.user = user;
-      return cb(err, true);
+      			req.user = user;
+      			return cb(err, true);
     });
   };
 
-  server.register(require('hapi-auth-jwt2'), (err) => {
-    server.auth.strategy('token', 'jwt', {
-      key: 'xxx',
-      validateFunc: validate,
+  			server.register(require('hapi-auth-jwt2'), (err) => {
+    			server.auth.strategy('token', 'jwt', {
+      			key: 'xxx',
+      			validateFunc: validate,
     });
   });
 
-  routes.forEach(route => server.route(route) );
+  			routes.forEach(route => server.route(route) );
 
-  const options = {
-    reporters: {
-        console: [{
-            module: 'good-squeeze',
-            name: 'Squeeze',
-            args: [{ log: '*', response: '*' }]
+  			const options = {
+    			reporters: {
+        			console: [{
+            			module: 'good-squeeze',
+            			name: 'Squeeze',
+            			args: [{ log: '*', response: '*' }]
         }, {
-            module: 'good-console'
+            			module: 'good-console'
         }, 'stdout'],
-        file: [{
-            module: 'good-squeeze',
-            name: 'Squeeze',
-            args: [{ ops: '*' }]
+        			file: [{
+            			module: 'good-squeeze',
+            			name: 'Squeeze',
+            			args: [{ ops: '*' }]
         }, {
-            module: 'good-squeeze',
-            name: 'SafeJson'
+            			module: 'good-squeeze',
+            			name: 'SafeJson'
         }/*, {
             module: 'good-file',
             args: ['']
         }*/],
-        http: [{
-            module: 'good-squeeze',
-            name: 'Squeeze',
-            args: [{ error: '*' }]
+        			http: [{
+            			module: 'good-squeeze',
+            			name: 'Squeeze',
+            			args: [{ error: '*' }]
         }, {
-            module: 'good-http',
-            args: ['http://prod.logs:3000', {
-                wreck: {
-                    headers: { 'x-api-key': 12345 }
+            			module: 'good-http',
+            			args: ['http://prod.logs:3000', {
+                			wreck: {
+                    			headers: { 'x-api-key': 12345 }
                 }
             }]
         }]
     }
   };
 
-  server.register({ register: require('good'), options }, (err) => {
-    if (err) throw err;
+  			server.register({ register: require('good'), options }, (err) => {
+    			if (err) throw err;
   });
 
 
   // Allow angular to handle routing on the the frontend
-  server.register(require('inert'), (err) => {
+  			server.register(require('inert'), (err) => {
 
-    if (err) {
-      throw err;
+    			if (err) {
+      			throw err;
     }
 
     /**
      * FIXME: Add robust production setup
      */
-    server.route({
-      method: 'GET',
-      path: '/{param*}',
-      handler: {
-        directory: {
-          path: 'dist'
+    			server.route({
+      			method: 'GET',
+      			path: '/{param*}',
+      			handler: {
+        			directory: {
+          			path: 'dist'
         }
       }
     });
 
-    server.start((err) => {
+    			server.start((err) => {
 
-      if (err) {
-        throw err;
+      			if (err) {
+        			throw err;
       }
 
-      console.log('Server running at ', server.info.uri);
+      			console.log('Server running at ', server.info.uri);
     });
   });
 });
@@ -116,15 +119,15 @@ mongoose.connect(DB_URI, _ => {
 // CONNECTION EVENTS
 // When successfully connected
 mongoose.connection.on('connected', function () {
-  console.log('Mongoose default connection open to ' + DB_URI);
+  			console.log('Mongoose default connection open to ' + DB_URI);
 });
 
 // If the connection throws an error
 mongoose.connection.on('error',function (err) {
-  console.log('Mongoose default connection error: ' + err);
+  			console.log('Mongoose default connection error: ' + err);
 });
 
 // When the connection is disconnected
 mongoose.connection.on('disconnected', function () {
-  console.log('Mongoose default connection disconnected. RESTful requests to server will not be available.');
+  			console.log('Mongoose default connection disconnected. RESTful requests to server will not be available.');
 });
