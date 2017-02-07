@@ -1,7 +1,7 @@
 {
-  "name": "src",
+  "name": "Give me an awesome movie",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "Give you an random awesome movie",
   "author": "Sara Vieira",
   "private": true,
   "scripts": {
