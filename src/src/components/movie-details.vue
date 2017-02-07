@@ -39,6 +39,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
+@import "../less/_utils.less";
+
 .movie-details {
   margin-top: 60px;
 }
@@ -57,16 +59,5 @@ ul {
       padding-right: 3px;
     }
   }
-}
-
-h2 {
-  margin-top: 10px;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-h3 {
-  font-weight: bold;
-  margin-bottom: 10px;
 }
 </style>
