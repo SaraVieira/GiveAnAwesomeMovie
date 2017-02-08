@@ -12,6 +12,11 @@ module.exports = [
 		path: '/api/movie',
 		handler: controller.get
 	},
+  {
+		method: 'DELETE',
+		path: '/api/movie/{id}',
+		handler: controller.delete
+	},
 	{
 		method: 'GET',
 		path: '/api/movie/{id}',

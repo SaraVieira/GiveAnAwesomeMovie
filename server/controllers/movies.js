@@ -8,20 +8,21 @@ const path = require('path'),
 module.exports = {
 
 	create: (req, res) => {
+    let payload = JSON.parse(req.payload);
 		const errors = {
-			name_error: 'namw is required',
+			name_error: 'name is required',
 			imdbID_error: 'imdbID is required'
 		};
 
-		if (req.payload) {
-			['name', 'imdbID_error'].forEach( field => {
-				if (!req.payload[field])
+		if (payload) {
+			['name', 'imdbID'].forEach( field => {
+				if (!payload[field])
 					return res(Boom.badData(errors[`${field}_error`]));
 			});
 
 			let movie = new Movie();
-			movie.name = req.payload['name'];
-			movie.imdbID = req.payload['imdbID'];
+			movie.name = payload['name'];
+			movie.imdbID = payload['imdbID'];
 			movie.save(function(err) {
 				if (err) {
 					if (err.code ===  11000) {
@@ -65,12 +66,19 @@ module.exports = {
 		});
 	},
 
-	get: (req, res) => {
-		let query = Movie.find();
+	delete: (req, res) => {
+		let query = Movie.findByIdAndRemove(req.params.id);
 		query.exec((err, results) => {
 			return res(results);
 		});
 	},
+
+  get: (req, res) => {
+    let query = Movie.find();
+    query.exec((err, results) => {
+      return res(results);
+    });
+  },
 
 	random: (req, call) => {
 		let query = Movie.find();

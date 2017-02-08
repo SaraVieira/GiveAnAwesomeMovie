@@ -1,5 +1,5 @@
 {
-  "name": "Give me an awesome movie",
+  "name": "give-me-an-awesome-movie",
   "version": "1.0.0",
   "description": "Give you an random awesome movie",
   "author": "Sara Vieira",
@@ -17,7 +17,8 @@
     "node-sass": "^4.5.0",
     "sass-loader": "^4.1.1",
     "scss-loader": "0.0.1",
-    "vue": "^2.1.0"
+    "vue": "^2.1.0",
+    "vue-router": "^2.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
