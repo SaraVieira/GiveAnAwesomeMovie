@@ -4,7 +4,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
 import Admin from './Admin.vue'
+import VueYouTubeEmbed from 'vue-youtube-embed'
 
+Vue.use(VueYouTubeEmbed)
 Vue.use(VueRouter)
 
 const routes = [

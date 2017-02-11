@@ -35,7 +35,7 @@ export default {
       .then((resp) => resp.json()) // Transform the data into json
       .then((data) => {
         self.movie = data
-        this.loaded = true
+        self.loaded = true
       })
     }
   },

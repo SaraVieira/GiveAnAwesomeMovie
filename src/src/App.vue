@@ -2,6 +2,7 @@
   <div id="app" class="columns">
     <nav>
       <img src="./assets/logo.svg" />
+      <a href="https://github.com/SaraVieira/HaveAnAwesomeMovie" target="_blank">Github</a>
     </nav>
     <hello></hello>
   </div>
@@ -29,18 +30,20 @@ export default {
 }
 
 nav {
-  width: 100px;
-  height: 140px;
+  width: 100%;
+  height: 70px;
   background: #FBFEF9;
   position: fixed;
   z-index: 99;
   display: flex;
   align-items: center;
-  justify-content: center;
+  top: 0px;
+  left: 0px;
+  padding: 0 10px;
+  justify-content: space-between;
 
   img {
-    max-height: 70%;
-    max-width: 70%;
+    max-height: 60px;
   }
 }
 </style>

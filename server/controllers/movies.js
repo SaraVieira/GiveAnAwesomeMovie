@@ -2,7 +2,8 @@
 const path = require('path'),
 	Movie = require(path.join(__dirname, '../models/movie.js')),
 	Boom = require('boom'),
-	unirest = require('unirest');
+	unirest = require('unirest'),
+  movieTrailer = require('movie-trailer');
 
 
 module.exports = {
@@ -83,37 +84,44 @@ module.exports = {
 	random: (req, call) => {
 		let query = Movie.find();
 		query.count().exec(function (err, count) {
-			let random = Math.floor(Math.random() * count);
-			query.findOne().skip(random).exec(
-        function (err, result) {
-	let request = unirest('GET', `https://api.themoviedb.org/3/find/${result.imdbID}`);
+      let random = Math.floor(Math.random() * count);
+      query.findOne().skip(random).exec(function (err, result) {
+        let request = unirest('GET', `https://api.themoviedb.org/3/find/${result.imdbID}`);
 
-	request.query({
-		'external_source': 'imdb_id',
-		'language': 'en-US',
-		'api_key': '7feb83087acd0bcec36d1798ef6b8771'
-	});
-
-	request.send('{}');
-
-	request.end(function (res) {
-		if (res.error) throw new Error(res.error);
-		let id = res.body.movie_results[0].id;
-		let req = unirest('GET', `https://api.themoviedb.org/3/movie/${id}`);
-
-		req.query({
-			'language': 'en-US',
-			'api_key': '7feb83087acd0bcec36d1798ef6b8771'
-		});
-
-		req.send('{}');
-
-		req.end(function (res) {
-			if (res.error) throw new Error(res.error);
-			return call(res.body);
-		});
-	});
+        request.query({
+          'external_source': 'imdb_id',
+          'language': 'en-US',
+          'api_key': '7feb83087acd0bcec36d1798ef6b8771'
         });
+
+        request.send('{}');
+
+        request.end(function (res) {
+          if (res.error) throw new Error(res.error);
+          let movie = res.body.movie_results[0];
+          let id = movie.id;
+          let req = unirest('GET', `https://api.themoviedb.org/3/movie/${id}`);
+
+          req.query({
+            'language': 'en-US',
+            'api_key': '7feb83087acd0bcec36d1798ef6b8771'
+          });
+
+          req.send('{}');
+
+          req.end(function (res) {
+            if (res.error) throw new Error(res.error);
+            let movie = res.body;
+            let year = movie.release_date.split('-')[0];
+            movieTrailer(movie.original_title, parseInt(year), function (err, res) {
+                if (err) throw new Error(res.error);
+                console.log(res);
+                movie.trailer = res;
+                return call(movie);
+            });
+          });
+        });
+      });
 		});
 	}
 };
