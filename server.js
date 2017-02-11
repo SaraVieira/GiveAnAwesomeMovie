@@ -16,7 +16,7 @@ const DB_URI = 'mongodb://localhost:27017/' + DB_NAME;
 mongoose.connect(DB_URI, _ => {
   			server.connection({
     			host: 'localhost',
-    			port: process.env.PORT || 8081,
+    			port: 22,
         	routes: {
             	cors: true
         }
